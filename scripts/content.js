@@ -65,7 +65,15 @@ handleModalTextInjection = () => {      //Handle the text injection in the Modal
         const tweetContent = modalNode.querySelector('div[data-testid="tweetText"]').textContent
         const targetBox = modalNode.querySelector('div[data-testid="tweetTextarea_0"]').firstChild.firstChild.firstChild.firstChild
             if(targetBox){
-                if(tweetContent !== '') targetBox.textContent = tweetContent
+                if(tweetContent !== '') {
+                  if(tweetContent.length > 280) 
+                    {
+                      targetBox.textContent = tweetContent.substring(0, 280)
+                    }
+                  else{
+                      targetBox.textContent = tweetContent
+                    }
+                }
                 else targetBox.textContent = `Sorry no text to copy, here is a joke you could share in twitter: How do trees get on the Internet? They log in.`
                 targetBox.click();
                 targetBox.dispatchEvent(new Event("input", { bubbles: true }));
