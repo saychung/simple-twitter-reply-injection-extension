@@ -1,0 +1,23 @@
+{
+    "manifest_version" : 3,
+    "name" : "Twitter Extension",
+    "version" : "1.0",
+    "description" : "This extension grabs the twitter post text and pastes it to the reply field",
+    "action" : {
+            "default_popup" : "popup/popup.html"
+    },
+    "icons" : {},
+    "background" : {
+        "service_worker" : "background.js",
+        "type" : "module"
+    },
+    "permissions": ["scripting","activeTab","tabs", "webNavigation"],
+    "content_scripts": [
+        {
+            "matches": ["https://twitter.com/*", "https://x.com/*"],
+            "js": ["scripts/content.js"]
+        }
+    ],
+    "host_permissions" : ["https://twitter.com/*", "https://x.com/*"]
+
+}
