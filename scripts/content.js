@@ -26,9 +26,16 @@ retrieveText = () => {      //retrieve the text content of the post from where t
 handleTextInjection = () => {       //handles the injection of the Text
     const textParent = document.querySelector('div[aria-label="Post text"]');
     if (textParent) {
-      const textbox = textParent.getElementsByTagName('span')[0];
+        const textbox = textParent.getElementsByTagName('span')[0];
       if (textbox) {
         textbox.textContent = retrieveText();
+        const wordLimitcheck = document.querySelectorAll('div[aria-live="polite"]')
+        if(wordLimitcheck.length > 1){
+          textbox.textContent = textbox.textContent.substring(0, 280)
+          textbox.click();
+          textbox.dispatchEvent(new Event("input", { bubbles: true }));
+          return;
+        }
         textbox.click();
         textbox.dispatchEvent(new Event("input", { bubbles: true }));
       }
@@ -56,7 +63,7 @@ handleModalTextInjection = () => {      //Handle the text injection in the Modal
     const modalNode = document.querySelector('div[aria-labelledby="modal-header"]')
     if(modalNode){
         const tweetContent = modalNode.querySelector('div[data-testid="tweetText"]').textContent
-        const targetBox = modalNode.querySelector('div[data-testid="tweetTextarea_0"]').firstChild.firstChild.firstChild
+        const targetBox = modalNode.querySelector('div[data-testid="tweetTextarea_0"]').firstChild.firstChild.firstChild.firstChild
             if(targetBox){
                 if(tweetContent !== '') targetBox.textContent = tweetContent
                 else targetBox.textContent = `Sorry no text to copy, here is a joke you could share in twitter: How do trees get on the Internet? They log in.`
